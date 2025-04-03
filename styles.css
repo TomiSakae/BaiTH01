@@ -25,7 +25,7 @@ html { scroll-behavior: smooth; font-size: 100%; -webkit-font-smoothing: antiali
     --border-radius-sm: 6px;
     --border-radius-md: 10px;
     --border-radius-lg: 16px;
-    --spacing-unit: 1rem;
+    --spacing-unit: 1rem; /* Base spacing unit */
     --font-primary: 'Poppins', 'Inter', sans-serif;
     --font-secondary: 'Roboto', 'Inter', sans-serif;
     --transition-speed-fast: 0.2s;
@@ -42,12 +42,11 @@ html { scroll-behavior: smooth; font-size: 100%; -webkit-font-smoothing: antiali
 	100% { background-position: 0% 50%; }
 }
 
-/* Body - Full Height Flex Centering */
+/* Body - Full Height Flex Centering & Increased Padding */
 body {
     font-family: var(--font-secondary);
     line-height: 1.7;
     background-color: var(--light-bg);
-     /* Optional: More subtle pattern */
     background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
     background-size: 20px 20px;
     color: var(--dark-text);
@@ -55,24 +54,22 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: var(--spacing-unit) * 1.5; /* Padding around the main grid */
+    /* Increased padding around the main grid */
+    padding: calc(var(--spacing-unit) * 2);
     overflow: hidden; /* Hide scrollbars on large screens */
 }
 
-/* Main Content Area - Now the CSS Grid Container */
+/* Main Content Area - Grid Container with Increased Gaps/Width */
 main {
     display: grid;
-    /* Define 3 columns: Left card, Center content, Right card */
-    /* Make center column potentially wider or sized by content */
-    grid-template-columns: minmax(280px, 1fr) minmax(350px, auto) minmax(280px, 1fr);
-    /* Define 2 rows: Top row (cards+center), Bottom row (card below center) */
+    /* Slightly wider min-width for side columns */
+    grid-template-columns: minmax(300px, 1fr) minmax(380px, auto) minmax(300px, 1fr);
     grid-template-rows: auto auto;
-    gap: calc(var(--spacing-unit) * 2.5) calc(var(--spacing-unit) * 2); /* Row gap, Column gap */
-    align-items: center; /* Vertically center items in their grid cell */
-    /* justify-items: center; */ /* Center content horizontally within cells (optional) */
+    /* Increased gaps for more visual separation */
+    gap: calc(var(--spacing-unit) * 3.5) calc(var(--spacing-unit) * 2.5); /* Row gap, Column gap */
+    align-items: center;
     width: 100%;
-    max-width: 1300px; /* Max width of the whole grid layout */
-    /* padding: var(--spacing-unit) * 2; Add padding if not on body */
+    max-width: 1500px; /* Increased max width of the whole grid layout */
 }
 
 /* Central Content Block (Grid Item) */
@@ -84,15 +81,18 @@ main {
     display: flex; /* Use flex internally for alignment */
     flex-direction: column;
     align-items: center;
+    /* Add some space below button if team members area is hidden */
+    padding-bottom: var(--spacing-unit);
      /* GSAP handles initial opacity/visibility */
 }
 
-/* Style Header, P, Button within Central Content */
+/* Style Header - Increased Padding */
 header {
     background: var(--gradient-bg-animated);
     background-size: 200% 200%;
     color: var(--light-text);
-    padding: calc(var(--spacing-unit) * 2.5) calc(var(--spacing-unit) * 2);
+    /* Increased padding inside header */
+    padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 2.5);
     border-radius: var(--border-radius-lg);
     margin-bottom: calc(var(--spacing-unit) * 1.5);
     box-shadow: 0 5px 15px rgba(var(--rgb-primary-color), 0.15);
@@ -107,7 +107,7 @@ h1 { font-family: var(--font-primary); font-size: clamp(1.6rem, 4vw, 2.2rem); fo
 .central-content p { margin-bottom: calc(var(--spacing-unit) * 1.8); color: var(--muted-text); font-size: 1.05rem; max-width: 55ch; }
 
 /* Button Style (Keep/Refine) */
-button#actionButton { /* Keep styles from previous */ padding: calc(var(--spacing-unit) * 1.1) calc(var(--spacing-unit) * 2.8); background: var(--gradient-bg); color: var(--light-text); border: none; border-radius: 50px; cursor: pointer; font-size: 1.1rem; font-weight: 600; font-family: var(--font-primary); transition: all var(--transition-speed-med) var(--transition-easing); display: inline-block; box-shadow: 0 4px 12px rgba(var(--rgb-primary-color), 0.25); letter-spacing: 0.8px; position: relative; overflow: hidden; z-index: 1; outline: none; }
+button#actionButton { padding: calc(var(--spacing-unit) * 1.1) calc(var(--spacing-unit) * 2.8); background: var(--gradient-bg); color: var(--light-text); border: none; border-radius: 50px; cursor: pointer; font-size: 1.1rem; font-weight: 600; font-family: var(--font-primary); transition: all var(--transition-speed-med) var(--transition-easing); display: inline-block; box-shadow: 0 4px 12px rgba(var(--rgb-primary-color), 0.25); letter-spacing: 0.8px; position: relative; overflow: hidden; z-index: 1; outline: none; }
 button#actionButton::before { content: ''; position: absolute; top: 0; left: -75%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); transition: left var(--transition-speed-slow) var(--transition-easing); z-index: 1;}
 button#actionButton:hover::before { left: 125%; }
 button#actionButton:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 8px 20px rgba(var(--rgb-secondary-color), 0.3); }
@@ -140,7 +140,7 @@ button#actionButton:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(va
     /* margin-top: calc(var(--spacing-unit) * -1); /* Optional: Pull up slightly if gap is too large */
 }
 
-/* Individual Member Card Styling (Mostly Keep) */
+/* Individual Member Card Styling - Slightly Increased Max Width */
 .member-card {
     background-color: var(--card-bg);
     border-radius: var(--border-radius-lg);
@@ -150,12 +150,11 @@ button#actionButton:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(va
                 box-shadow var(--transition-speed-med) var(--transition-easing);
     border: 1px solid var(--border-color);
     width: 100%; /* Let grid column control width */
-    max-width: 340px; /* Max width for a card */
-    /* Remove flex properties */
+    max-width: 360px; /* Increased max width for a card */
      /* GSAP handles initial state */
 }
 .member-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: var(--card-hover-shadow); }
-.card-header { display: flex; align-items: center; margin-bottom: calc(var(--spacing-unit) * 1.2); padding-bottom: var(--spacing-unit)*0.8; border-bottom: 1px solid var(--border-color); }
+.card-header { display: flex; align-items: center; margin-bottom: calc(var(--spacing-unit) * 1.2); padding-bottom: var(--spacing-unit)*0.8; border-bottom: 1px solid var(--border-color); padding-bottom: 22px;}
 .member-icon { display: inline-flex; justify-content: center; align-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--gradient-bg); color: var(--light-text); font-family: var(--font-primary); font-weight: 700; font-size: 1.2rem; margin-right: calc(var(--spacing-unit)*1.2); flex-shrink: 0; }
 .tom-card .member-icon { background: var(--primary-color); }
 .jerry-card .member-icon { background: var(--secondary-color); }
@@ -171,8 +170,9 @@ button#actionButton:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(va
 @media (max-width: 992px) { /* Adjust breakpoint as needed */
     body {
         align-items: flex-start; /* Align content to top */
-        padding: var(--spacing-unit) * 2 var(--spacing-unit);
-        min-height: none; /* Allow natural height */
+        /* Keep increased padding for consistency */
+        padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
+        min-height: auto; /* Allow natural height */
         height: auto;
         overflow-y: auto; /* Allow scrolling */
     }
@@ -202,13 +202,15 @@ button#actionButton:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(va
     }
 
      .member-card {
+        /* Ensure max-width here is appropriate for mobile */
         max-width: 500px;
     }
 }
 
 @media (max-width: 480px) {
     h1 { font-size: clamp(1.5rem, 5vw, 1.8rem); }
-    header { padding: calc(var(--spacing-unit) * 2) var(--spacing-unit) * 1.5; }
+    /* Adjust header padding slightly for small screens if needed */
+    header { padding: calc(var(--spacing-unit) * 2.5) var(--spacing-unit) * 1.8; }
     button#actionButton { font-size: 1rem; padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 2.2);}
     .member-card { padding: var(--spacing-unit) * 1.5; }
     .member-card h3 { font-size: 1.1rem;}
