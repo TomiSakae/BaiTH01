@@ -54,34 +54,31 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    /* Increased padding around the main grid */
     padding: calc(var(--spacing-unit) * 2);
     overflow: hidden; /* Hide scrollbars on large screens */
+    cursor: none; /* Hide default cursor */
 }
 
 /* Main Content Area - Grid Container with Increased Gaps/Width */
 main {
     display: grid;
-    /* Slightly wider min-width for side columns */
     grid-template-columns: minmax(300px, 1fr) minmax(380px, auto) minmax(300px, 1fr);
     grid-template-rows: auto auto;
-    /* Increased gaps for more visual separation */
     gap: calc(var(--spacing-unit) * 3.5) calc(var(--spacing-unit) * 2.5); /* Row gap, Column gap */
     align-items: center;
     width: 100%;
-    max-width: 1500px; /* Increased max width of the whole grid layout */
+    max-width: 1500px;
 }
 
 /* Central Content Block (Grid Item) */
 .central-content {
-    grid-column: 2 / 3; /* Place in the middle column */
-    grid-row: 1 / 2;    /* Place in the top row */
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
     text-align: center;
-    width: 100%; /* Take full width of its grid column */
-    display: flex; /* Use flex internally for alignment */
+    width: 100%;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    /* Add some space below button if team members area is hidden */
     padding-bottom: var(--spacing-unit);
      /* GSAP handles initial opacity/visibility */
 }
@@ -91,7 +88,6 @@ header {
     background: var(--gradient-bg-animated);
     background-size: 200% 200%;
     color: var(--light-text);
-    /* Increased padding inside header */
     padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 2.5);
     border-radius: var(--border-radius-lg);
     margin-bottom: calc(var(--spacing-unit) * 1.5);
@@ -99,48 +95,93 @@ header {
     animation: gradientBG 12s ease infinite;
     position: relative;
     overflow: hidden;
-    width: 100%; /* Make header fill central content width */
-    max-width: 550px; /* Optional max width for header */
+    width: 100%;
+    max-width: 550px;
 }
-header::before { /* Keep texture */ content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%); opacity: 0.5; pointer-events: none; }
+header::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%); opacity: 0.5; pointer-events: none; }
 h1 { font-family: var(--font-primary); font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 700; text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); margin: 0; line-height: 1.3; }
 .central-content p { margin-bottom: calc(var(--spacing-unit) * 1.8); color: var(--muted-text); font-size: 1.05rem; max-width: 55ch; }
 
-/* Button Style (Keep/Refine) */
-button#actionButton { padding: calc(var(--spacing-unit) * 1.1) calc(var(--spacing-unit) * 2.8); background: var(--gradient-bg); color: var(--light-text); border: none; border-radius: 50px; cursor: pointer; font-size: 1.1rem; font-weight: 600; font-family: var(--font-primary); transition: all var(--transition-speed-med) var(--transition-easing); display: inline-block; box-shadow: 0 4px 12px rgba(var(--rgb-primary-color), 0.25); letter-spacing: 0.8px; position: relative; overflow: hidden; z-index: 1; outline: none; }
-button#actionButton::before { content: ''; position: absolute; top: 0; left: -75%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); transition: left var(--transition-speed-slow) var(--transition-easing); z-index: 1;}
-button#actionButton:hover::before { left: 125%; }
-button#actionButton:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 8px 20px rgba(var(--rgb-secondary-color), 0.3); }
-button#actionButton:active { transform: translateY(-2px) scale(1); box-shadow: 0 4px 12px rgba(var(--rgb-primary-color), 0.25); }
-button#actionButton:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(var(--rgb-secondary-color), 0.4), 0 8px 20px rgba(var(--rgb-secondary-color), 0.3); }
+/* --- UPDATED BUTTON STYLES --- */
+button#actionButton {
+    padding: calc(var(--spacing-unit) * 1.1) calc(var(--spacing-unit) * 2.8);
+    background: var(--gradient-bg);
+    color: var(--light-text);
+    border: none;
+    border-radius: 50px;
+    /* cursor: pointer; */ /* Not needed, body hides cursor */
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    transition: transform var(--transition-speed-med) var(--transition-easing),
+                box-shadow var(--transition-speed-med) var(--transition-easing),
+                background var(--transition-speed-med) ease;
+    display: inline-block;
+    box-shadow: 0 4px 12px rgba(var(--rgb-primary-color), 0.25);
+    letter-spacing: 0.8px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    outline: none;
+    transform: scale(1) translateY(0);
+}
+button#actionButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg);
+    transition: left var(--transition-speed-med) var(--transition-easing);
+    z-index: 1;
+}
+button#actionButton:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(var(--rgb-secondary-color), 0.3);
+}
+button#actionButton:hover::before {
+    left: 125%;
+}
+button#actionButton:active {
+    transform: translateY(-1px) scale(0.97);
+    box-shadow: 0 2px 6px rgba(var(--rgb-primary-color), 0.3);
+    transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+button#actionButton:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(var(--rgb-secondary-color), 0.4), 0 8px 20px rgba(var(--rgb-secondary-color), 0.3);
+}
+/* --- END OF UPDATED BUTTON STYLES --- */
 
-/* Team Members Result Area */
-#teamMembers { margin-top: calc(var(--spacing-unit) * 1.5); padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 1.8); background-color: var(--success-bg); border: 1px solid var(--success-border); color: var(--success-color); border-radius: var(--border-radius-md); font-weight: 500; font-size: 1rem; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; box-shadow: var(--shadow-xs); }
+/* --- Team Members Result Area --- */
+#teamMembers {
+    margin-top: calc(var(--spacing-unit) * 1.5);
+    padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 1.8);
+    background-color: var(--success-bg);
+    border: 1px solid var(--success-border);
+    color: var(--success-color);
+    border-radius: var(--border-radius-md);
+    font-weight: 500;
+    font-size: 1rem;
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(var(--rgb-primary-color), 0.05);
+     /* GSAP handles initial state */
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.9) translateY(10px);
+}
 #teamMembers strong { font-weight: 700; margin-right: 8px; }
-#teamMembers:empty { display: none; }
 
+/* --- Card Placement & Styling --- */
+.tom-card { grid-column: 1 / 2; grid-row: 1 / 2; justify-self: end; }
+.jerry-card { grid-column: 3 / 4; grid-row: 1 / 2; justify-self: start; }
+.spike-card { grid-column: 2 / 3; grid-row: 2 / 3; justify-self: center; }
 
-/* Card Placement using Grid */
-.tom-card {
-    grid-column: 1 / 2; /* First column */
-    grid-row: 1 / 2;    /* First row */
-    justify-self: end; /* Align card to the right edge of its column */
-}
-
-.jerry-card {
-    grid-column: 3 / 4; /* Third column */
-    grid-row: 1 / 2;    /* First row */
-    justify-self: start; /* Align card to the left edge of its column */
-}
-
-.spike-card {
-    grid-column: 2 / 3; /* Middle column */
-    grid-row: 2 / 3;    /* Second row */
-    justify-self: center; /* Center card horizontally in its column */
-    /* margin-top: calc(var(--spacing-unit) * -1); /* Optional: Pull up slightly if gap is too large */
-}
-
-/* Individual Member Card Styling - Slightly Increased Max Width */
 .member-card {
     background-color: var(--card-bg);
     border-radius: var(--border-radius-lg);
@@ -149,9 +190,11 @@ button#actionButton:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(va
     transition: transform var(--transition-speed-med) var(--transition-easing),
                 box-shadow var(--transition-speed-med) var(--transition-easing);
     border: 1px solid var(--border-color);
-    width: 100%; /* Let grid column control width */
-    max-width: 360px; /* Increased max width for a card */
+    width: 100%;
+    max-width: 360px;
      /* GSAP handles initial state */
+    opacity: 0;
+    visibility: hidden;
 }
 .member-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: var(--card-hover-shadow); }
 .card-header { display: flex; align-items: center; margin-bottom: calc(var(--spacing-unit) * 1.2); padding-bottom: var(--spacing-unit)*0.8; border-bottom: 1px solid var(--border-color); padding-bottom: 22px;}
@@ -166,54 +209,109 @@ button#actionButton:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(va
 .card-body code { background-color: rgba(var(--rgb-primary-color), 0.08); padding: 3px 6px; border-radius: var(--border-radius-sm); font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 0.85em; color: var(--primary-color); border: 1px solid rgba(var(--rgb-primary-color), 0.15); }
 
 
-/* Responsive Adjustments - Switch to Column Flex Layout */
-@media (max-width: 992px) { /* Adjust breakpoint as needed */
-    body {
-        align-items: flex-start; /* Align content to top */
-        /* Keep increased padding for consistency */
-        padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
-        min-height: auto; /* Allow natural height */
-        height: auto;
-        overflow-y: auto; /* Allow scrolling */
-    }
+/* --- UPDATED Custom Cursor Styles --- */
+#custom-cursor {
+    position: fixed;
+    top: 0; /* Positioned by JS/GSAP transform */
+    left: 0;/* Positioned by JS/GSAP transform */
+    width: 25px;      /* Base size */
+    height: 25px;     /* Base size */
+    background-color: rgba(var(--rgb-secondary-color), 0.4);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0; /* Start hidden */
+    will-change: transform, width, height, background-color; /* Hint for browser performance */
+    /* Transform is handled by JS/GSAP for positioning */
 
+    /* Add transitions for properties that change on hover */
+    transition: opacity 0.2s ease-out,
+                width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), /* Smooth size transition */
+                height 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), /* Smooth size transition */
+                background-color 0.3s ease; /* Smooth color transition */
+
+    /* Flexbox to center the text inside */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Style for the text inside the cursor */
+#custom-cursor .cursor-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center perfectly */
+    font-family: var(--font-primary);
+    font-size: 10px; /* Small font size */
+    font-weight: 600;
+    color: var(--light-text);
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.2s ease-in-out;
+    white-space: nowrap; /* Prevent text from wrapping */
+    user-select: none; /* Prevent text selection */
+}
+
+/* Styles when hovering the specific button (JS adds the 'cursor-hover-button' class) */
+#custom-cursor.cursor-hover-button {
+    width: 90px;  /* Enlarged size */
+    height: 90px; /* Enlarged size */
+    background-color: rgba(var(--rgb-primary-color), 0.7); /* Darker, more opaque background */
+}
+
+/* Show text when the cursor has the specific hover class */
+#custom-cursor.cursor-hover-button .cursor-text {
+    opacity: 1; /* Make text visible */
+}
+
+/* Hide cursor if the body gains a 'cursor-hidden' class (used by JS on mouse leave) */
+body.cursor-hidden #custom-cursor {
+    opacity: 0;
+}
+/* --- End of Custom Cursor Styles --- */
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    body {
+        align-items: flex-start;
+        padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
+        min-height: auto;
+        height: auto;
+        overflow-y: auto;
+        cursor: auto; /* Restore default cursor */
+    }
     main {
-        display: flex; /* Switch from Grid to Flex */
+        display: flex;
         flex-direction: column;
-        align-items: center; /* Center items vertically */
-        grid-template-columns: 1fr; /* Reset grid settings */
+        align-items: center;
+        grid-template-columns: 1fr;
         grid-template-rows: auto;
-        gap: calc(var(--spacing-unit) * 2); /* Adjust gap for column layout */
-        max-width: 600px; /* Limit width in stacked view */
+        gap: calc(var(--spacing-unit) * 2);
+        max-width: 600px;
         padding: 0;
     }
-
-    /* Reset grid placement for all items */
     .central-content,
     .tom-card,
     .jerry-card,
     .spike-card {
         grid-column: auto;
         grid-row: auto;
-        justify-self: auto; /* Reset specific alignment */
+        justify-self: auto;
         align-self: auto;
-        width: 95%; /* Make items take up most of the width */
-        max-width: 500px; /* Limit card width even more */
-    }
-
-     .member-card {
-        /* Ensure max-width here is appropriate for mobile */
+        width: 95%;
         max-width: 500px;
     }
+     .member-card { max-width: 500px; }
+    #custom-cursor { display: none; } /* Hide custom cursor */
 }
 
 @media (max-width: 480px) {
     h1 { font-size: clamp(1.5rem, 5vw, 1.8rem); }
-    /* Adjust header padding slightly for small screens if needed */
-    header { padding: calc(var(--spacing-unit) * 2.5) var(--spacing-unit) * 1.8; }
+    header { padding: calc(var(--spacing-unit) * 2.5) calc(var(--spacing-unit) * 1.8); }
     button#actionButton { font-size: 1rem; padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 2.2);}
-    .member-card { padding: var(--spacing-unit) * 1.5; }
+    .member-card { padding: calc(var(--spacing-unit) * 1.5); }
     .member-card h3 { font-size: 1.1rem;}
     .card-body li { font-size: 0.85rem;}
-
 }
